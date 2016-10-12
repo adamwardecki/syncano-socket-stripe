@@ -7,8 +7,11 @@ stripe.createCharge({
 	apiKey: apiKey,
 	amount: ARGS.POST.amount,
 	currency: ARGS.POST.currency,
-	description: ARGS.POST.desc,
+	capture: ARGS.POST.capture,
+	description: ARGS.POST.description,
 	customer: ARGS.POST.customer,
+	card: ARGS.POST.card
+
 }).exec({
 	// An unexpected error occurred.
 	error: function (err){

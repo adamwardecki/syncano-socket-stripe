@@ -21,6 +21,9 @@ endpoints:
           type: string
           description: Payment currency
           example: "usd"
+        capture:
+         type: boolean
+         description: Whether or not to immediately capture the charge.
         description:
           type: string
           description: An arbitrary string that can be attached to the payment object
@@ -29,6 +32,10 @@ endpoints:
           type: string
           description: The ID of an existing customer that will be charged in this request.
           example: "cus_9MN9bCgl5mDjfb"
+        card:
+          type: string
+          description: The Stripe id of a saved card to charge.
+          example: card_193eVsCvFCjkMlbyhYRZDaF7
       response:
         mimetype: application/json
         examples:
