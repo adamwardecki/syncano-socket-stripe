@@ -1,0 +1,117 @@
+name: stripe
+version: 0.1
+description: This socket is a simple integration with Stripe (https://stripe.com/). It allows for making payments through the Stripe API.
+author:
+  name: Adam Wardecki
+  email: adam.wardecki@syncano.com
+config:
+  stripe_secret_key:
+    prompt: true
+endpoints:
+  make_stripe_payment:
+    POST:
+      script: stripe_charge
+      description: Charge a customer. See the full docs on the Stripe documentation page (https://stripe.com/docs/api#charges).
+      parameters:
+        amount:
+          type: string
+          description: Charge amount in the smallest currency unit i.e. sending 100 will charge a $1.00
+          example: "9265"
+        currency:
+          type: string
+          description: Payment currency
+          example: "usd"
+        description:
+          type: string
+          description: An arbitrary string that can be attached to the payment object
+          example: "Payment for candies"
+        customer:
+          type: string
+          description: The ID of an existing customer that will be charged in this request.
+          example: "cus_9MN9bCgl5mDjfb"
+      response:
+        mimetype: application/json
+        examples:
+          - exit_code: 200
+            description: "Successful charge"
+            example: >
+              {
+                "status":"success",
+                "duration":537,
+                "result": {
+                  "stderr":"",
+                  "stdout": {
+                      "id": "ch_193dvu2eZvKYlo2CBh16AmaZ",
+                      "object": "charge",
+                      "amount": 4995,
+                      "amount_refunded": 0,
+                      "application_fee": null,
+                      "balance_transaction": "txn_18tm9B2eZvKYlo2C5vs7CPrL",
+                      "captured": true,
+                      "created": 1476244894,
+                      "currency": "usd",
+                      "customer": "cus_9MMfK1pOom3u7Q",
+                      "description": "ROR Startup Stripe customer",
+                      "destination": null,
+                      "dispute": null,
+                      "failure_code": null,
+                      "failure_message": null,
+                      "fraud_details": {
+                      },
+                      "invoice": null,
+                      "livemode": false,
+                      "metadata": {
+                      },
+                      "order": null,
+                      "paid": true,
+                      "receipt_email": null,
+                      "receipt_number": null,
+                      "refunded": false,
+                      "refunds": {
+                        "object": "list",
+                        "data": [
+
+                        ],
+                        "has_more": false,
+                        "total_count": 0,
+                        "url": "/v1/charges/ch_193dvu2eZvKYlo2CBh16AmaZ/refunds"
+                      },
+                      "shipping": null,
+                      "source": {
+                        "id": "card_193dvq2eZvKYlo2Cdcluh71l",
+                        "object": "card",
+                        "address_city": null,
+                        "address_country": null,
+                        "address_line1": null,
+                        "address_line1_check": null,
+                        "address_line2": null,
+                        "address_state": null,
+                        "address_zip": "68161",
+                        "address_zip_check": "pass",
+                        "brand": "Visa",
+                        "country": "US",
+                        "customer": "cus_9MMfK1pOom3u7Q",
+                        "cvc_check": "pass",
+                        "dynamic_last4": null,
+                        "exp_month": 4,
+                        "exp_year": 2024,
+                        "funding": "credit",
+                        "last4": "4242",
+                        "metadata": {
+                        },
+                        "name": "example008@example.com",
+                        "tokenization_method": null
+                      },
+                      "source_transfer": null,
+                      "statement_descriptor": null,
+                      "status": "succeeded"
+                    }
+                  },
+                "executed_at":"2016-10-07T15:37:27.044265Z",
+                "id":4
+              }
+dependencies:
+  scripts:
+    send_email:
+      runtime_name: nodejs_library_v1.0
+      file: scripts/stripe_charge.js
