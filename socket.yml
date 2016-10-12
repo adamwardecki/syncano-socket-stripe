@@ -112,6 +112,6 @@ endpoints:
               }
 dependencies:
   scripts:
-    send_email:
+    stripe_charge:
       runtime_name: nodejs_library_v1.0
       file: scripts/stripe_charge.js
